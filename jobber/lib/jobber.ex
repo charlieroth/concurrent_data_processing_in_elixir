@@ -3,7 +3,11 @@ defmodule Jobber do
   alias Jobber.JobSupervisor
 
   def start_job(args) do
-    DynamicSupervisor.start_child(JobRunner, {JobSupervisor, args})
+    if Enum.count(running_imports()) >= 5 do
+      {:error, :job_quota_reached}
+    else
+      DynamicSupervisor.start_child(JobRunner, {JobSupervisor, args})
+    end
   end
 
   def running_imports() do
