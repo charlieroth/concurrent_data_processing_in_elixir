@@ -7,7 +7,14 @@ defmodule Scraper.Application do
   def start(_type, _args) do
     children = [
       PageProducer,
-      PageConsumer
+      %{
+        id: :consumer_a,
+        start: {PageConsumer, :start_link, [nil]}
+      },
+      %{
+        id: :consumer_b,
+        start: {PageConsumer, :start_link, [nil]}
+      }
     ]
 
     opts = [strategy: :one_for_one, name: Scraper.Supervisor]
