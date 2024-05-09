@@ -8,3 +8,7 @@ bad_job = fn ->
   :error
 end
 
+doomed_job = fn ->
+  Process.sleep(2000)
+  raise "Boom!"
+end
