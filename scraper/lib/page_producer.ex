@@ -13,7 +13,7 @@ defmodule PageProducer do
 
   def init(initial_state) do
     Logger.info("PageProducer init")
-    {:producer, initial_state, buffer_size: 1}
+    {:producer, initial_state}
   end
 
   def handle_demand(demand, state) do
