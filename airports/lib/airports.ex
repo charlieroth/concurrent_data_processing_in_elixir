@@ -17,10 +17,18 @@ defmodule Airports do
     end)
     |> Flow.reject(&(&1.type == "closed"))
     |> Flow.partition(key: {:key, :country})
-    |> Flow.reduce(fn -> %{} end, fn item, acc ->
-      Map.update(acc, item.country, 1, &(&1 + 1))
+    |> Flow.group_by(& &1.country)
+    |> Flow.on_trigger(fn airports_by_country ->
+      country_counts =
+        Enum.map(airports_by_country, fn {country, data} ->
+          {country, Enum.count(data)}
+        end)
+
+      {country_counts, airports_by_country}
     end)
+    |> Flow.take_sort(10, fn {_, a}, {_, b} -> a > b end)
     |> Enum.to_list()
+    |> List.flatten()
   end
 
   def airports_csv() do
