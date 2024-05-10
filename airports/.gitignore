@@ -27,3 +27,6 @@ airports-*.tar
 
 # Language Server
 /.elixir_ls/
+
+# Airports CSV
+/priv/*.csv
