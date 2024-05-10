@@ -20,7 +20,8 @@ defmodule Scraper.MixProject do
 
   defp deps do
     [
-      {:gen_stage, "~> 1.2"}
+      {:gen_stage, "~> 1.2"},
+      {:flow, "~> 1.2"}
     ]
   end
 end
